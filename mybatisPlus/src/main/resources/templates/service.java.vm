@@ -1,0 +1,79 @@
+package ${package.Service};
+
+import ${package.Entity}.${entity};
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import ${package.Mapper}.${table.mapperName};
+
+/**
+ * <p>
+ * $!{table.comment} 服务类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+@Transactional
+public class ${table.serviceName}{
+
+    @Autowired
+    private ${table.mapperName} targetMapper;
+    
+    
+    /**
+     * 获取全部数据
+     */
+    public List<${entity}> selectList(){
+        List<${entity}> entitys = targetMapper.selectList();
+        return entitys;
+    }
+
+
+    /**
+     * 根据ID查找数据
+     */
+    public ${entity} selectById(Long id){
+        ${entity} entity = targetMapper.selectById(id);
+        return entity;
+    }
+
+
+    /**
+     * 添加数据
+     */
+    public int insert(${entity} entity){
+        int isOk = targetMapper.insert(entity);
+        return isOk;
+    }
+
+
+    /**
+     * 更新数据
+     */
+    public int update(${entity} entity){
+        int isOk = targetMapper.update(entity);
+        return isOk;
+     }
+
+
+    /**
+     * 批量删除数据
+     */
+    public int deleteBatchIds(List<Long> ids){
+        int isOk = targetMapper.deleteBatchIds(ids);
+        return isOk;
+    }
+    
+    /**
+     * 删除数据
+     */
+    public int deleteBatchId(Long id){
+        int isOk = targetMapper.deleteBatchId(id);
+        return isOk;
+    }
+
+}
+
