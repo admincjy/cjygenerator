@@ -12,28 +12,158 @@
     <resultMap id="BaseResultMap" type="${package.Entity}.${entity}">
 #foreach($field in ${table.fields})
 #if(${field.keyFlag})##生成主键排在第一位
-        <id column="${field.name}" property="${field.propertyName}" />
+        <id column="${field.name}" jdbcType="${field.propertyType}" property="${field.propertyName}" />
 #end
 #end
 #foreach($field in ${table.commonFields})##生成公共字段
-    <result column="${field.name}" property="${field.propertyName}" />
+    <result column="${field.name}" jdbcType="${field.propertyType}" property="${field.propertyName}" />
 #end
 #foreach($field in ${table.fields})
 #if(!${field.keyFlag})##生成普通字段
-        <result column="${field.name}" property="${field.propertyName}" />
+        <result column="${field.name}" jdbcType="${field.propertyType}" property="${field.propertyName}" />
 #end
 #end
     </resultMap>
 
 #end
-#if(${baseColumnList})
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
 #foreach($field in ${table.commonFields})
         ${field.name},
 #end
         ${table.fieldNames}
-    </sql>
-
+    </sql>  
+    
+    <!--创建记录 -->
+	<insert id="insert" parameterType="${package.Entity}.${entity}" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO ${table.name}
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+#foreach($field in ${table.fields})
+          <if test="${field.propertyName}!=null">${field.name}#if($foreach.hasNext),#end</if>
 #end
+        </trim>
+	    <trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+#foreach($field in ${table.fields})
+          <if test="${field.propertyName}!=null">#{${field.propertyName},jdbcType=${field.propertyType}}#if($foreach.hasNext),#end</if>
+#end				
+	    </trim>
+	</insert>    
+    <!--批量创建记录 -->
+	<insert id="batchSave" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id" >
+		<foreach collection="list" item="item" index="index" separator=";">
+			INSERT INTO ${table.name}
+			<trim prefix="(" suffix=")" suffixOverrides="," >
+#foreach($field in ${table.fields})
+	          <if test="item.${field.propertyName}!=null">${field.name}#if($foreach.hasNext),#end</if>
+#end
+	        </trim>
+		    <trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+#foreach($field in ${table.fields})
+	          <if test="item.${field.propertyName}!=null">#{item.${field.propertyName},jdbcType=${field.propertyType}}#if($foreach.hasNext),#end</if>
+#end				
+		    </trim>
+		</foreach>
+	</insert>
+<!-- 更新记录 -->
+	<update id="update" parameterType="${package.Entity}.${entity}">
+		UPDATE ${table.name}
+		<set>
+#foreach($field in ${table.fields})
+#if(!${field.keyFlag})##主键
+          <if test="${field.propertyName}!=null">${field.name} = #{${field.propertyName},jdbcType=${field.propertyType}}#if($foreach.hasNext),#end</if>
+#end
+#end
+		</set>
+		<where> 
+#foreach($field in ${table.fields})
+#if(${field.keyFlag})##主键
+        ${field.name} = #{${field.propertyName},jdbcType=${field.propertyType}}
+#end
+#end
+		</where>				
+	</update>    
+    
+	<!--批量更新记录 -->
+	<update id="batchUpdate" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" separator=";">
+			UPDATE ${table.name}
+			<set>
+#foreach($field in ${table.fields})
+#if(!${field.keyFlag})##主键
+	          <if test="item.${field.propertyName}!=null">${field.name} = #{item.${field.propertyName},jdbcType=${field.propertyType}}#if($foreach.hasNext),#end</if>
+#end
+#end
+			</set>
+			<where> 
+#foreach($field in ${table.fields})
+#if(${field.keyFlag})##主键
+	          ${field.name} = #{item.${field.propertyName},jdbcType=${field.propertyType}}
+#end
+#end
+			</where>
+		</foreach>
+	</update>    
+    <!-- 按ID查询记录 -->
+	<select id="selectById" parameterType="long" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM ${table.name}
+		WHERE 
+#foreach($field in ${table.fields})
+#if(${field.keyFlag})##主键
+	      ${field.name} = #{${field.propertyName}}
+#end
+#end	
+	</select>
+	<!-- 查询所有记录 -->
+	<select id="selectList" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" />
+		FROM ${table.name}	
+	</select>
+	
+	<!-- 按Id删除 -->
+	<delete id="deleteById" parameterType="long">
+		DELETE FROM ${table.name} 
+		WHERE 
+#foreach($field in ${table.fields})
+#if(${field.keyFlag})##主键
+	      ${field.name} = #{${field.propertyName}}
+#end
+#end
+	</delete>
+
+	<!-- 按Id批量删除 -->
+	<delete id="deleteBatchIds" parameterType="java.util.List">
+		DELETE FROM ${table.name} WHERE 
+#foreach($field in ${table.fields})
+#if(${field.keyFlag})##主键
+	      ${field.name}
+#end
+#end
+          in (
+		<foreach collection="list" item="item" index="index" separator=";">
+			#{item}
+		</foreach>
+		)
+	</delete>
+    <select id="selectAll" parameterType="${package}.common.PageInfoReqVo" resultMap="BaseResultMap">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from ${table.name}
+	    <where>
+	       1=1
+	       <if test="queryData!=null">
+#foreach($field in ${table.fields})
+#if(!${field.keyFlag})##主键
+	#if(${field.propertyType}=="String" || ${field.propertyType}=="VARCHAR")
+	        <if test="queryData.${field.propertyName}!=null and queryData.${field.propertyName}!='' ">${field.name} like %#{queryData.${field.propertyName},jdbcType=${field.propertyType}}%#if($foreach.hasNext) and #end</if>
+	#end
+	#if(${field.propertyType}=="Integer" || ${field.propertyType}=="Double")
+	        <if test="queryData.${field.propertyName}!=null">${field.name} = #{queryData.${field.propertyName},jdbcType=${field.propertyType}}#if($foreach.hasNext) and #end</if>
+	#end
+#end
+#end
+		   </if>
+	    </where>
+	  </select>
+    
 </mapper>

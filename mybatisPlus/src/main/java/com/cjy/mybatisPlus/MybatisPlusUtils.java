@@ -6,11 +6,12 @@ import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
-import java.io.File;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,9 @@ public class MybatisPlusUtils {
         gc.setActiveRecord(true);
         gc.setEnableCache(false);// XML 二级缓存
         gc.setBaseResultMap(true);// XML ResultMap
-        gc.setBaseColumnList(false);// XML columList
+        gc.setBaseColumnList(true);// XML columList
+        //设置时间类型转换策略 默认为DateType.SQL_PACK 如需要将时间格式统一设置为java.util.Date即可修改为DateType.ONLY_DATE
+        gc.setDateType(DateType.TIME_PACK);
         gc.setAuthor("cjy");
 
         // 自定义文件命名，注意 %s 会自动填充表实体属性！
@@ -54,11 +57,11 @@ public class MybatisPlusUtils {
         dsc.setDbType(DbType.MYSQL);
         dsc.setTypeConvert(new MySqlTypeConvert(){
             // 自定义数据库表字段类型转换【可选】
-            public DbColumnType processTypeConvert(String fieldType) {
-                System.out.println("转换类型：" + fieldType);
+//            public DbColumnType processTypeConvert(String fieldType) {
+//                System.out.println("转换类型：" + fieldType);
                 // 注意！！processTypeConvert 存在默认类型转换，如果不是你要的效果请自定义返回、非如下直接返回。
-                return (DbColumnType) super.processTypeConvert(gc, fieldType);
-            }
+//                return (DbColumnType) super.processTypeConvert(gc, fieldType);
+//            }
         });
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
@@ -148,7 +151,7 @@ public class MybatisPlusUtils {
          tc.setMapper("/templates/mapper.java.vm");
          tc.setXml("/templates/mapper.xml.vm");
          tc.setService("/templates/service.java.vm");
-         tc.setServiceImpl("");
+         tc.setServiceImpl(null);
          
         // 如上任何一个模块如果设置 空 OR Null 将不生成该模块。
          mpg.setTemplate(tc);

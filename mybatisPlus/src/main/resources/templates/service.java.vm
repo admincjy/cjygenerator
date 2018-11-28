@@ -6,6 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import ${package.Mapper}.${table.mapperName};
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.wecat.small.common.BaseRespData;
+import com.wecat.small.common.PageInfoReqVo;
 
 /**
  * <p>
@@ -21,6 +25,20 @@ public class ${table.serviceName}{
 
     @Autowired
     private ${table.mapperName} targetMapper;
+    
+    /**
+     * 获取分页数据列表
+     */
+    public BaseRespData selectByPage(PageInfoReqVo<${entity}> pageInfoReqVo){
+		PageHelper.startPage(pageInfoReqVo.getPage(), pageInfoReqVo.getSize());
+		List<${entity}> eList=targetMapper.selectByPage(pageInfoReqVo);
+		PageInfo<${entity}> pageDataList = new PageInfo<>(eList);
+		BaseRespData baseRespData=new BaseRespData();
+		baseRespData.setAaData(eList);
+		baseRespData.setStaus(0);
+		baseRespData.setDataCount(pageDataList.getTotal());
+    	return baseRespData;
+    }
     
     
     /**
@@ -57,7 +75,14 @@ public class ${table.serviceName}{
         int isOk = targetMapper.update(entity);
         return isOk;
      }
-
+    
+    /**
+     * 删除数据
+     */
+    public int deleteById(Long id){
+        int isOk = targetMapper.deleteById(id);
+        return isOk;
+    }
 
     /**
      * 批量删除数据
@@ -67,13 +92,7 @@ public class ${table.serviceName}{
         return isOk;
     }
     
-    /**
-     * 删除数据
-     */
-    public int deleteBatchId(Long id){
-        int isOk = targetMapper.deleteBatchId(id);
-        return isOk;
-    }
+    
 
 }
 

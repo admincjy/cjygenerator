@@ -5,7 +5,9 @@ import com.wecat.small.service.EmployeeService;
 import com.wecat.small.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.wecat.small.common.BaseRespData;
 import com.wecat.small.common.BaseRespMsg;
+import com.wecat.small.common.PageInfoReqVo;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
  * </p>
  *
  * @author cjy
- * @since 2018-11-27
+ * @since 2018-11-28
  */
 @RestController
 @RequestMapping("Employee")
@@ -27,25 +29,25 @@ public class EmployeeController {
 
     
     /**
-     * 获取数据列表
+     * 获取分页数据列表
      */
-//    @RequestMapping("/list")
-//    @ResponseBody
-//    public BaseResponse findListByPage(@RequestParam(name = "page", defaultValue = "1") int pageIndex,@RequestParam(name = "rows", defaultValue = "20") int step){
-//        Page page = new Page(pageIndex,step);
-//        targetService.selectPage(page);
-//        return BaseResponse.onSuccess(page);
-//    }
+    @RequestMapping("/list")
+	public BaseRespData list(@RequestBody PageInfoReqVo<Employee> pageInfoReqVo){
+    	BaseRespData baseRespData=targetService.selectByPage(pageInfoReqVo);
+		return baseRespData;
+	}
 
 
     /**
      * 获取全部数据
      */
     @RequestMapping("/all")
-    @ResponseBody
-    public Object findAll(){
+    public BaseRespData findAll(){
         List<Employee> entitys = targetService.selectList();
-        return entitys;
+        BaseRespData baseRespData=new BaseRespData();
+        baseRespData.setAaData(entitys);
+        baseRespData.setStaus(0);
+        return baseRespData;
     }
 
 
@@ -53,13 +55,12 @@ public class EmployeeController {
      * 根据ID查找数据
      */
     @RequestMapping("/find")
-    @ResponseBody
-    public Object find(@RequestParam("id") Long id){
+    public BaseRespData find(@RequestParam("id") Long id){
         Employee entity = targetService.selectById(id);
-        if(entity==null){
-            return new BaseRespMsg(99,"未查询到该记录");
-        }
-        return entity;
+        BaseRespData baseRespData=new BaseRespData();
+        baseRespData.setObData(entity);
+        baseRespData.setStaus(0);
+        return baseRespData;
     }
 
 
@@ -67,7 +68,6 @@ public class EmployeeController {
      * 添加数据
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @ResponseBody
     public BaseRespMsg addItem(@RequestBody Employee entity){
         int isOk = targetService.insert(entity);
         if(isOk==1){
@@ -81,7 +81,6 @@ public class EmployeeController {
      * 更新数据
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    @ResponseBody
     public BaseRespMsg update(@RequestBody Employee entity){
         int isOk = targetService.update(entity);
         if(isOk==1){
@@ -95,7 +94,6 @@ public class EmployeeController {
      * 批量删除数据
      */
     @RequestMapping("/dels")
-    @ResponseBody
     public BaseRespMsg deleteItems(@RequestParam("ids") List<Long> ids){
         int isOk = targetService.deleteBatchIds(ids);
         if(isOk>0){
@@ -108,9 +106,8 @@ public class EmployeeController {
      * 删除数据
      */
     @RequestMapping("/del")
-    @ResponseBody
     public BaseRespMsg deleteItems(@RequestParam("id") Long id){
-        int isOk = targetService.deleteBatchId(id);
+        int isOk = targetService.deleteById(id);
         if(isOk==1){
             return new BaseRespMsg(0,"删除成功");
         }

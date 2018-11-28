@@ -2,6 +2,7 @@ package ${package.Entity};
 
 import java.io.Serializable;
 import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * <p>
@@ -26,11 +27,7 @@ public class ${entity} implements Serializable {
 #if(${versionFieldName}==${field.name})
    @Version
 #end
-#if(${field.propertyType} == "LocalDate")
-   private Date ${field.propertyName};
-#else
    private ${field.propertyType} ${field.propertyName};
-#end
 #end
 ## ----------  END 字段循环遍历  ----------
 
@@ -41,20 +38,15 @@ public class ${entity} implements Serializable {
 #else
 #set($getprefix="get")
 #end
-#if(${field.propertyType} == "LocalDate")
-#set($propertyType ="Date")
-#else
-#set($propertyType=${field.propertyType})
-#end
 
-   public $propertyType ${getprefix}${field.capitalName}() {
+   public  ${field.propertyType} $getprefix${field.capitalName}() {
       return ${field.propertyName};
    }
 
 #if(${entityBuilderModel})
-   public ${entity} set${field.capitalName}($propertyType ${field.propertyName}) {
+   public ${entity} set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
 #else
-   public void set${field.capitalName}($propertyType ${field.propertyName}) {
+   public void set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
 #end
       this.${field.propertyName} = ${field.propertyName};
 #if(${entityBuilderModel})

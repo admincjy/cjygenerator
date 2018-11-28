@@ -2,6 +2,7 @@ package com.wecat.small.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * <p>
@@ -9,7 +10,7 @@ import java.util.Date;
  * </p>
  *
  * @author cjy
- * @since 2018-11-27
+ * @since 2018-11-28
  */
 public class Employee implements Serializable {
 
@@ -129,7 +130,7 @@ public class Employee implements Serializable {
    private Integer workAge;
 
 
-   public Integer getId() {
+   public  Integer getId() {
       return id;
    }
 
@@ -137,7 +138,7 @@ public class Employee implements Serializable {
       this.id = id;
    }
 
-   public String getName() {
+   public  String getName() {
       return name;
    }
 
@@ -145,7 +146,7 @@ public class Employee implements Serializable {
       this.name = name;
    }
 
-   public String getGender() {
+   public  String getGender() {
       return gender;
    }
 
@@ -153,7 +154,7 @@ public class Employee implements Serializable {
       this.gender = gender;
    }
 
-   public Date getBirthday() {
+   public  Date getBirthday() {
       return birthday;
    }
 
@@ -161,7 +162,7 @@ public class Employee implements Serializable {
       this.birthday = birthday;
    }
 
-   public String getIdCard() {
+   public  String getIdCard() {
       return idCard;
    }
 
@@ -169,7 +170,7 @@ public class Employee implements Serializable {
       this.idCard = idCard;
    }
 
-   public String getWedlock() {
+   public  String getWedlock() {
       return wedlock;
    }
 
@@ -177,7 +178,7 @@ public class Employee implements Serializable {
       this.wedlock = wedlock;
    }
 
-   public Integer getNationId() {
+   public  Integer getNationId() {
       return nationId;
    }
 
@@ -185,7 +186,7 @@ public class Employee implements Serializable {
       this.nationId = nationId;
    }
 
-   public String getNativePlace() {
+   public  String getNativePlace() {
       return nativePlace;
    }
 
@@ -193,7 +194,7 @@ public class Employee implements Serializable {
       this.nativePlace = nativePlace;
    }
 
-   public Integer getPoliticId() {
+   public  Integer getPoliticId() {
       return politicId;
    }
 
@@ -201,7 +202,7 @@ public class Employee implements Serializable {
       this.politicId = politicId;
    }
 
-   public String getEmail() {
+   public  String getEmail() {
       return email;
    }
 
@@ -209,7 +210,7 @@ public class Employee implements Serializable {
       this.email = email;
    }
 
-   public String getPhone() {
+   public  String getPhone() {
       return phone;
    }
 
@@ -217,7 +218,7 @@ public class Employee implements Serializable {
       this.phone = phone;
    }
 
-   public String getAddress() {
+   public  String getAddress() {
       return address;
    }
 
@@ -225,7 +226,7 @@ public class Employee implements Serializable {
       this.address = address;
    }
 
-   public Integer getDepartmentId() {
+   public  Integer getDepartmentId() {
       return departmentId;
    }
 
@@ -233,7 +234,7 @@ public class Employee implements Serializable {
       this.departmentId = departmentId;
    }
 
-   public Integer getJobLevelId() {
+   public  Integer getJobLevelId() {
       return jobLevelId;
    }
 
@@ -241,7 +242,7 @@ public class Employee implements Serializable {
       this.jobLevelId = jobLevelId;
    }
 
-   public Integer getPosId() {
+   public  Integer getPosId() {
       return posId;
    }
 
@@ -249,7 +250,7 @@ public class Employee implements Serializable {
       this.posId = posId;
    }
 
-   public String getEngageForm() {
+   public  String getEngageForm() {
       return engageForm;
    }
 
@@ -257,7 +258,7 @@ public class Employee implements Serializable {
       this.engageForm = engageForm;
    }
 
-   public String getTiptopDegree() {
+   public  String getTiptopDegree() {
       return tiptopDegree;
    }
 
@@ -265,7 +266,7 @@ public class Employee implements Serializable {
       this.tiptopDegree = tiptopDegree;
    }
 
-   public String getSpecialty() {
+   public  String getSpecialty() {
       return specialty;
    }
 
@@ -273,7 +274,7 @@ public class Employee implements Serializable {
       this.specialty = specialty;
    }
 
-   public String getSchool() {
+   public  String getSchool() {
       return school;
    }
 
@@ -281,7 +282,7 @@ public class Employee implements Serializable {
       this.school = school;
    }
 
-   public Date getBeginDate() {
+   public  Date getBeginDate() {
       return beginDate;
    }
 
@@ -289,7 +290,7 @@ public class Employee implements Serializable {
       this.beginDate = beginDate;
    }
 
-   public String getWorkState() {
+   public  String getWorkState() {
       return workState;
    }
 
@@ -297,7 +298,7 @@ public class Employee implements Serializable {
       this.workState = workState;
    }
 
-   public String getWorkID() {
+   public  String getWorkID() {
       return workID;
    }
 
@@ -305,7 +306,7 @@ public class Employee implements Serializable {
       this.workID = workID;
    }
 
-   public Double getContractTerm() {
+   public  Double getContractTerm() {
       return contractTerm;
    }
 
@@ -313,7 +314,7 @@ public class Employee implements Serializable {
       this.contractTerm = contractTerm;
    }
 
-   public Date getConversionTime() {
+   public  Date getConversionTime() {
       return conversionTime;
    }
 
@@ -321,7 +322,7 @@ public class Employee implements Serializable {
       this.conversionTime = conversionTime;
    }
 
-   public Date getNotWorkDate() {
+   public  Date getNotWorkDate() {
       return notWorkDate;
    }
 
@@ -329,7 +330,7 @@ public class Employee implements Serializable {
       this.notWorkDate = notWorkDate;
    }
 
-   public Date getBeginContract() {
+   public  Date getBeginContract() {
       return beginContract;
    }
 
@@ -337,7 +338,7 @@ public class Employee implements Serializable {
       this.beginContract = beginContract;
    }
 
-   public Date getEndContract() {
+   public  Date getEndContract() {
       return endContract;
    }
 
@@ -345,7 +346,7 @@ public class Employee implements Serializable {
       this.endContract = endContract;
    }
 
-   public Integer getWorkAge() {
+   public  Integer getWorkAge() {
       return workAge;
    }
 

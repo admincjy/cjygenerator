@@ -1,6 +1,7 @@
 package com.wecat.small.mapper;
 
 import com.wecat.small.entity.Employee;
+import com.wecat.small.common.PageInfoReqVo;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * </p>
  *
  * @author cjy
- * @since 2018-11-27
+ * @since 2018-11-28
  */
 public interface EmployeeMapper{
 
@@ -21,8 +22,10 @@ public interface EmployeeMapper{
        
        int update(Employee entity);
        
+       int deleteById(Long id);
+       
        int deleteBatchIds(List<Long> ids);
        
-       int deleteBatchId(Long id);
+       List<Employee> selectByPage(PageInfoReqVo<Employee> pageInfoReqVo);
 
 }

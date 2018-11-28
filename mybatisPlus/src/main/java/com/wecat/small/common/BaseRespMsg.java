@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 
 /**
- * @author Administrator
+ * @author cjy
  *
  */
 public class BaseRespMsg implements Serializable{
