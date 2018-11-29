@@ -10,7 +10,7 @@ import java.time.LocalDate;
  * </p>
  *
  * @author cjy
- * @since 2018-11-28
+ * @since 2018-11-29
  */
 public class Employee implements Serializable {
 
@@ -31,7 +31,7 @@ public class Employee implements Serializable {
     /**
      * 出生日期
      */
-   private Date birthday;
+   private LocalDate birthday;
     /**
      * 身份证号
      */
@@ -95,7 +95,7 @@ public class Employee implements Serializable {
     /**
      * 入职日期
      */
-   private Date beginDate;
+   private LocalDate beginDate;
     /**
      * 在职状态
      */
@@ -111,19 +111,19 @@ public class Employee implements Serializable {
     /**
      * 转正日期
      */
-   private Date conversionTime;
+   private LocalDate conversionTime;
     /**
      * 离职日期
      */
-   private Date notWorkDate;
+   private LocalDate notWorkDate;
     /**
      * 合同起始日期
      */
-   private Date beginContract;
+   private LocalDate beginContract;
     /**
      * 合同终止日期
      */
-   private Date endContract;
+   private LocalDate endContract;
     /**
      * 工龄
      */
@@ -154,11 +154,11 @@ public class Employee implements Serializable {
       this.gender = gender;
    }
 
-   public  Date getBirthday() {
+   public  LocalDate getBirthday() {
       return birthday;
    }
 
-   public void setBirthday(Date birthday) {
+   public void setBirthday(LocalDate birthday) {
       this.birthday = birthday;
    }
 
@@ -282,11 +282,11 @@ public class Employee implements Serializable {
       this.school = school;
    }
 
-   public  Date getBeginDate() {
+   public  LocalDate getBeginDate() {
       return beginDate;
    }
 
-   public void setBeginDate(Date beginDate) {
+   public void setBeginDate(LocalDate beginDate) {
       this.beginDate = beginDate;
    }
 
@@ -314,35 +314,35 @@ public class Employee implements Serializable {
       this.contractTerm = contractTerm;
    }
 
-   public  Date getConversionTime() {
+   public  LocalDate getConversionTime() {
       return conversionTime;
    }
 
-   public void setConversionTime(Date conversionTime) {
+   public void setConversionTime(LocalDate conversionTime) {
       this.conversionTime = conversionTime;
    }
 
-   public  Date getNotWorkDate() {
+   public  LocalDate getNotWorkDate() {
       return notWorkDate;
    }
 
-   public void setNotWorkDate(Date notWorkDate) {
+   public void setNotWorkDate(LocalDate notWorkDate) {
       this.notWorkDate = notWorkDate;
    }
 
-   public  Date getBeginContract() {
+   public  LocalDate getBeginContract() {
       return beginContract;
    }
 
-   public void setBeginContract(Date beginContract) {
+   public void setBeginContract(LocalDate beginContract) {
       this.beginContract = beginContract;
    }
 
-   public  Date getEndContract() {
+   public  LocalDate getEndContract() {
       return endContract;
    }
 
-   public void setEndContract(Date endContract) {
+   public void setEndContract(LocalDate endContract) {
       this.endContract = endContract;
    }
 

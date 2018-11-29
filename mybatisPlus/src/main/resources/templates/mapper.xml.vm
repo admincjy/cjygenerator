@@ -155,10 +155,11 @@
 #foreach($field in ${table.fields})
 #if(!${field.keyFlag})##主键
 	#if(${field.propertyType}=="String" || ${field.propertyType}=="VARCHAR")
-	        <if test="queryData.${field.propertyName}!=null and queryData.${field.propertyName}!='' ">${field.name} like %#{queryData.${field.propertyName},jdbcType=${field.propertyType}}%#if($foreach.hasNext) and #end</if>
-	#end
-	#if(${field.propertyType}=="Integer" || ${field.propertyType}=="Double")
-	        <if test="queryData.${field.propertyName}!=null">${field.name} = #{queryData.${field.propertyName},jdbcType=${field.propertyType}}#if($foreach.hasNext) and #end</if>
+	       <if test="queryData.${field.propertyName}!=null and queryData.${field.propertyName}!='' "> and ${field.name} like CONCAT('%',#{queryData.${field.propertyName},jdbcType=${field.propertyType}},'%')</if> 
+	#elseif(${field.propertyType}=="LocalDate" || ${field.propertyType}=="LocalTime")
+	       <if test="queryData.${field.propertyName}!=null and queryData.${field.propertyName}!='' "> and ${field.name} = #{queryData.${field.propertyName}}&gt;= #{startTime} and #{queryData.${field.propertyName}}&lt;= #{endTime}</if>
+	#else 
+	       <if test="queryData.${field.propertyName}!=null"> and ${field.name} = #{queryData.${field.propertyName},jdbcType=${field.propertyType}}</if>
 	#end
 #end
 #end

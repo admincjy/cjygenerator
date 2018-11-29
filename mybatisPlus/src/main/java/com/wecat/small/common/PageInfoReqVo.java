@@ -1,6 +1,7 @@
 package com.wecat.small.common;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,6 +14,7 @@ public class PageInfoReqVo<T> implements Serializable {
 	private List<T> data;
 
     private T queryData;
+    
 
     /** 分页页码 或者pageNumber*/
     private int page;
