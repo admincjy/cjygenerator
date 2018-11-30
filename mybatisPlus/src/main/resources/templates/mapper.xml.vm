@@ -12,15 +12,15 @@
     <resultMap id="BaseResultMap" type="${package.Entity}.${entity}">
 #foreach($field in ${table.fields})
 #if(${field.keyFlag})##生成主键排在第一位
-        <id column="${field.name}" jdbcType="${field.propertyType}" property="${field.propertyName}" />
+        <id column="${field.name}"  property="${field.propertyName}" />
 #end
 #end
 #foreach($field in ${table.commonFields})##生成公共字段
-    <result column="${field.name}" jdbcType="${field.propertyType}" property="${field.propertyName}" />
+    <result column="${field.name}"  property="${field.propertyName}" />
 #end
 #foreach($field in ${table.fields})
 #if(!${field.keyFlag})##生成普通字段
-        <result column="${field.name}" jdbcType="${field.propertyType}" property="${field.propertyName}" />
+        <result column="${field.name}"  property="${field.propertyName}" />
 #end
 #end
     </resultMap>
@@ -44,7 +44,7 @@
         </trim>
 	    <trim prefix="VALUES (" suffix=")" suffixOverrides="," >
 #foreach($field in ${table.fields})
-          <if test="${field.propertyName}!=null">#{${field.propertyName},jdbcType=${field.propertyType}}#if($foreach.hasNext),#end</if>
+          <if test="${field.propertyName}!=null">#{${field.propertyName}}#if($foreach.hasNext),#end</if>
 #end				
 	    </trim>
 	</insert>    
@@ -59,7 +59,7 @@
 	        </trim>
 		    <trim prefix="VALUES (" suffix=")" suffixOverrides="," >
 #foreach($field in ${table.fields})
-	          <if test="item.${field.propertyName}!=null">#{item.${field.propertyName},jdbcType=${field.propertyType}}#if($foreach.hasNext),#end</if>
+	          <if test="item.${field.propertyName}!=null">#{item.${field.propertyName}}#if($foreach.hasNext),#end</if>
 #end				
 		    </trim>
 		</foreach>
@@ -70,14 +70,14 @@
 		<set>
 #foreach($field in ${table.fields})
 #if(!${field.keyFlag})##主键
-          <if test="${field.propertyName}!=null">${field.name} = #{${field.propertyName},jdbcType=${field.propertyType}}#if($foreach.hasNext),#end</if>
+          <if test="${field.propertyName}!=null">${field.name} = #{${field.propertyName}}#if($foreach.hasNext),#end</if>
 #end
 #end
 		</set>
 		<where> 
 #foreach($field in ${table.fields})
 #if(${field.keyFlag})##主键
-        ${field.name} = #{${field.propertyName},jdbcType=${field.propertyType}}
+        ${field.name} = #{${field.propertyName}}
 #end
 #end
 		</where>				
@@ -90,14 +90,14 @@
 			<set>
 #foreach($field in ${table.fields})
 #if(!${field.keyFlag})##主键
-	          <if test="item.${field.propertyName}!=null">${field.name} = #{item.${field.propertyName},jdbcType=${field.propertyType}}#if($foreach.hasNext),#end</if>
+	          <if test="item.${field.propertyName}!=null">${field.name} = #{item.${field.propertyName}}#if($foreach.hasNext),#end</if>
 #end
 #end
 			</set>
 			<where> 
 #foreach($field in ${table.fields})
 #if(${field.keyFlag})##主键
-	          ${field.name} = #{item.${field.propertyName},jdbcType=${field.propertyType}}
+	          ${field.name} = #{item.${field.propertyName}}
 #end
 #end
 			</where>
@@ -145,7 +145,7 @@
 		</foreach>
 		)
 	</delete>
-    <select id="selectAll" parameterType="${package}.common.PageInfoReqVo" resultMap="BaseResultMap">
+    <select id="selectByPage" parameterType="com.wecat.small.common.PageInfoReqVo" resultMap="BaseResultMap">
 	    select 
 	    <include refid="Base_Column_List" />
 	    from ${table.name}
@@ -155,11 +155,11 @@
 #foreach($field in ${table.fields})
 #if(!${field.keyFlag})##主键
 	#if(${field.propertyType}=="String" || ${field.propertyType}=="VARCHAR")
-	       <if test="queryData.${field.propertyName}!=null and queryData.${field.propertyName}!='' "> and ${field.name} like CONCAT('%',#{queryData.${field.propertyName},jdbcType=${field.propertyType}},'%')</if> 
+	       <if test="queryData.${field.propertyName}!=null and queryData.${field.propertyName}!='' "> and ${field.name} like CONCAT('%',#{queryData.${field.propertyName}},'%')</if> 
 	#elseif(${field.propertyType}=="LocalDate" || ${field.propertyType}=="LocalTime")
 	       <if test="queryData.${field.propertyName}!=null and queryData.${field.propertyName}!='' "> and ${field.name} = #{queryData.${field.propertyName}}&gt;= #{startTime} and #{queryData.${field.propertyName}}&lt;= #{endTime}</if>
 	#else 
-	       <if test="queryData.${field.propertyName}!=null"> and ${field.name} = #{queryData.${field.propertyName},jdbcType=${field.propertyType}}</if>
+	       <if test="queryData.${field.propertyName}!=null"> and ${field.name} = #{queryData.${field.propertyName}}</if>
 	#end
 #end
 #end

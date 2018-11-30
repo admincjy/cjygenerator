@@ -1,11 +1,11 @@
 package com.wecat.small.service;
 
-import com.wecat.small.entity.Employee;
+import com.wecat.small.entity.Sysmsg;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
-import com.wecat.small.mapper.EmployeeMapper;
+import com.wecat.small.mapper.SysmsgMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wecat.small.common.BaseRespData;
@@ -17,22 +17,22 @@ import com.wecat.small.common.PageInfoReqVo;
  * </p>
  *
  * @author cjy
- * @since 2018-11-29
+ * @since 2018-11-30
  */
 @Service
 @Transactional
-public class EmployeeService{
+public class SysmsgService{
 
     @Autowired
-    private EmployeeMapper targetMapper;
+    private SysmsgMapper targetMapper;
     
     /**
      * 获取分页数据列表
      */
-    public BaseRespData selectByPage(PageInfoReqVo<Employee> pageInfoReqVo){
+    public BaseRespData selectByPage(PageInfoReqVo<Sysmsg> pageInfoReqVo){
 		PageHelper.startPage(pageInfoReqVo.getPage(), pageInfoReqVo.getSize());
-		List<Employee> eList=targetMapper.selectByPage(pageInfoReqVo);
-		PageInfo<Employee> pageDataList = new PageInfo<>(eList);
+		List<Sysmsg> eList=targetMapper.selectByPage(pageInfoReqVo);
+		PageInfo<Sysmsg> pageDataList = new PageInfo<>(eList);
 		BaseRespData baseRespData=new BaseRespData();
 		baseRespData.setAaData(eList);
 		baseRespData.setStaus(0);
@@ -44,8 +44,8 @@ public class EmployeeService{
     /**
      * 获取全部数据
      */
-    public List<Employee> selectList(){
-        List<Employee> entitys = targetMapper.selectList();
+    public List<Sysmsg> selectList(){
+        List<Sysmsg> entitys = targetMapper.selectList();
         return entitys;
     }
 
@@ -53,8 +53,8 @@ public class EmployeeService{
     /**
      * 根据ID查找数据
      */
-    public Employee selectById(Long id){
-        Employee entity = targetMapper.selectById(id);
+    public Sysmsg selectById(Long id){
+        Sysmsg entity = targetMapper.selectById(id);
         return entity;
     }
 
@@ -62,7 +62,7 @@ public class EmployeeService{
     /**
      * 添加数据
      */
-    public int insert(Employee entity){
+    public int insert(Sysmsg entity){
         int isOk = targetMapper.insert(entity);
         return isOk;
     }
@@ -71,7 +71,7 @@ public class EmployeeService{
     /**
      * 更新数据
      */
-    public int update(Employee entity){
+    public int update(Sysmsg entity){
         int isOk = targetMapper.update(entity);
         return isOk;
      }

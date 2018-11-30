@@ -1,8 +1,8 @@
 package com.wecat.small.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
-import com.wecat.small.service.EmployeeService;
-import com.wecat.small.entity.Employee;
+import com.wecat.small.service.SysmsgService;
+import com.wecat.small.entity.Sysmsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.wecat.small.common.BaseRespData;
@@ -17,22 +17,22 @@ import java.util.List;
  * </p>
  *
  * @author cjy
- * @since 2018-11-29
+ * @since 2018-11-30
  */
 @RestController
-@RequestMapping("Employee")
-public class EmployeeController {
+@RequestMapping("Sysmsg")
+public class SysmsgController {
 
 
     @Autowired
-    private EmployeeService targetService;
+    private SysmsgService targetService;
 
     
     /**
      * 获取分页数据列表
      */
     @RequestMapping("/list")
-	public BaseRespData list(@RequestBody PageInfoReqVo<Employee> pageInfoReqVo){
+	public BaseRespData list(@RequestBody PageInfoReqVo<Sysmsg> pageInfoReqVo){
     	BaseRespData baseRespData=targetService.selectByPage(pageInfoReqVo);
 		return baseRespData;
 	}
@@ -43,7 +43,7 @@ public class EmployeeController {
      */
     @RequestMapping("/all")
     public BaseRespData findAll(){
-        List<Employee> entitys = targetService.selectList();
+        List<Sysmsg> entitys = targetService.selectList();
         BaseRespData baseRespData=new BaseRespData();
         baseRespData.setAaData(entitys);
         baseRespData.setStaus(0);
@@ -56,7 +56,7 @@ public class EmployeeController {
      */
     @RequestMapping("/find")
     public BaseRespData find(@RequestParam("id") Long id){
-        Employee entity = targetService.selectById(id);
+        Sysmsg entity = targetService.selectById(id);
         BaseRespData baseRespData=new BaseRespData();
         baseRespData.setObData(entity);
         baseRespData.setStaus(0);
@@ -68,7 +68,7 @@ public class EmployeeController {
      * 添加数据
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public BaseRespMsg addItem(@RequestBody Employee entity){
+    public BaseRespMsg addItem(@RequestBody Sysmsg entity){
         int isOk = targetService.insert(entity);
         if(isOk==1){
             return new BaseRespMsg(0,"添加成功");
@@ -81,7 +81,7 @@ public class EmployeeController {
      * 更新数据
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public BaseRespMsg update(@RequestBody Employee entity){
+    public BaseRespMsg update(@RequestBody Sysmsg entity){
         int isOk = targetService.update(entity);
         if(isOk==1){
             return new BaseRespMsg(0,"更新成功");

@@ -1,15 +1,8 @@
-package ${package.Controller};
+package com.wecat.small.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-#if(${restControllerStyle})
-import org.springframework.web.bind.annotation.RestController;
-#else
 import org.springframework.stereotype.Controller;
-#end
-#if(${superControllerClassPackage})
-import ${superControllerClassPackage};
-#end
-import ${package.Service}.${table.serviceName};
-import ${package.Entity}.${entity};
+import com.wecat.small.service.MsgcontentService;
+import com.wecat.small.entity.Msgcontent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.wecat.small.common.BaseRespData;
@@ -20,26 +13,26 @@ import java.util.List;
 
 /**
  * <p>
- * $!{table.comment} 前端控制器
+ *  前端控制器
  * </p>
  *
- * @author ${author}
- * @since ${date}
+ * @author cjy
+ * @since 2018-11-30
  */
 @RestController
-@RequestMapping("${entity}")
-public class ${table.controllerName} {
+@RequestMapping("Msgcontent")
+public class MsgcontentController {
 
 
     @Autowired
-    private ${table.serviceName} targetService;
+    private MsgcontentService targetService;
 
     
     /**
      * 获取分页数据列表
      */
     @RequestMapping("/list")
-	public BaseRespData list(@RequestBody PageInfoReqVo<${entity}> pageInfoReqVo){
+	public BaseRespData list(@RequestBody PageInfoReqVo<Msgcontent> pageInfoReqVo){
     	BaseRespData baseRespData=targetService.selectByPage(pageInfoReqVo);
 		return baseRespData;
 	}
@@ -50,7 +43,7 @@ public class ${table.controllerName} {
      */
     @RequestMapping("/all")
     public BaseRespData findAll(){
-        List<${entity}> entitys = targetService.selectList();
+        List<Msgcontent> entitys = targetService.selectList();
         BaseRespData baseRespData=new BaseRespData();
         baseRespData.setAaData(entitys);
         baseRespData.setStaus(0);
@@ -63,7 +56,7 @@ public class ${table.controllerName} {
      */
     @RequestMapping("/find")
     public BaseRespData find(@RequestParam("id") Long id){
-        ${entity} entity = targetService.selectById(id);
+        Msgcontent entity = targetService.selectById(id);
         BaseRespData baseRespData=new BaseRespData();
         baseRespData.setObData(entity);
         baseRespData.setStaus(0);
@@ -75,7 +68,7 @@ public class ${table.controllerName} {
      * 添加数据
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public BaseRespMsg addItem(@RequestBody ${entity} entity){
+    public BaseRespMsg addItem(@RequestBody Msgcontent entity){
         int isOk = targetService.insert(entity);
         if(isOk==1){
             return new BaseRespMsg(0,"添加成功");
@@ -88,7 +81,7 @@ public class ${table.controllerName} {
      * 更新数据
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public BaseRespMsg update(@RequestBody ${entity} entity){
+    public BaseRespMsg update(@RequestBody Msgcontent entity){
         int isOk = targetService.update(entity);
         if(isOk==1){
             return new BaseRespMsg(0,"更新成功");
