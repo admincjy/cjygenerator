@@ -1,8 +1,8 @@
 package com.wecat.small.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
-import com.wecat.small.service.SysmsgService;
-import com.wecat.small.entity.Sysmsg;
+import com.wecat.small.service.OplogService;
+import com.wecat.small.entity.Oplog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.wecat.small.common.BaseRespData;
@@ -17,22 +17,22 @@ import java.util.List;
  * </p>
  *
  * @author cjy
- * @since 2018-11-30
+ * @since 2018-12-13
  */
 @RestController
-@RequestMapping("Sysmsg")
-public class SysmsgController {
+@RequestMapping("Oplog")
+public class OplogController {
 
 
     @Autowired
-    private SysmsgService targetService;
+    private OplogService targetService;
 
     
     /**
      * 获取分页数据列表
      */
     @RequestMapping("/list")
-	public BaseRespData list(@RequestBody PageInfoReqVo<Sysmsg> pageInfoReqVo){
+	public BaseRespData list(@RequestBody PageInfoReqVo<Oplog> pageInfoReqVo){
     	BaseRespData baseRespData=targetService.selectByPage(pageInfoReqVo);
 		return baseRespData;
 	}
@@ -43,7 +43,7 @@ public class SysmsgController {
      */
     @RequestMapping("/all")
     public BaseRespData findAll(){
-        List<Sysmsg> entitys = targetService.selectList();
+        List<Oplog> entitys = targetService.selectList();
         BaseRespData baseRespData=new BaseRespData();
         baseRespData.setAaData(entitys);
         baseRespData.setStaus(0);
@@ -56,7 +56,7 @@ public class SysmsgController {
      */
     @RequestMapping("/find")
     public BaseRespData find(@RequestParam("id") Long id){
-        Sysmsg entity = targetService.selectById(id);
+        Oplog entity = targetService.selectById(id);
         BaseRespData baseRespData=new BaseRespData();
         baseRespData.setObData(entity);
         baseRespData.setStaus(0);
@@ -68,7 +68,7 @@ public class SysmsgController {
      * 添加数据
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public BaseRespMsg addItem(@RequestBody Sysmsg entity){
+    public BaseRespMsg addItem(@RequestBody Oplog entity){
         int isOk = targetService.insert(entity);
         if(isOk==1){
             return new BaseRespMsg(0,"添加成功");
@@ -81,7 +81,7 @@ public class SysmsgController {
      * 更新数据
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public BaseRespMsg update(@RequestBody Sysmsg entity){
+    public BaseRespMsg update(@RequestBody Oplog entity){
         int isOk = targetService.update(entity);
         if(isOk==1){
             return new BaseRespMsg(0,"更新成功");

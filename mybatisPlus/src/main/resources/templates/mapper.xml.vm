@@ -50,19 +50,20 @@
 	</insert>    
     <!--批量创建记录 -->
 	<insert id="batchSave" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id" >
-		<foreach collection="list" item="item" index="index" separator=";">
-			INSERT INTO ${table.name}
-			<trim prefix="(" suffix=")" suffixOverrides="," >
+		INSERT INTO ${table.name}
+		<trim prefix="(" suffix=")" suffixOverrides="," >
 #foreach($field in ${table.fields})
 	          <if test="item.${field.propertyName}!=null">${field.name}#if($foreach.hasNext),#end</if>
 #end
-	        </trim>
-		    <trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+	    </trim> 
+	    VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			<trim prefix="(" suffix=")" suffixOverrides="," >
 #foreach($field in ${table.fields})
 	          <if test="item.${field.propertyName}!=null">#{item.${field.propertyName}}#if($foreach.hasNext),#end</if>
 #end				
 		    </trim>
-		</foreach>
+		</foreach>;
 	</insert>
 <!-- 更新记录 -->
 	<update id="update" parameterType="${package.Entity}.${entity}">
