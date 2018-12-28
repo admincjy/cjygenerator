@@ -146,7 +146,7 @@
 		</foreach>
 		)
 	</delete>
-    <select id="selectByPage" parameterType="com.wecat.small.common.PageInfoReqVo" resultMap="BaseResultMap">
+    <select id="selectByPage" parameterType="com.cjy.shiro.common.PageInfoReqVo" resultMap="BaseResultMap">
 	    select 
 	    <include refid="Base_Column_List" />
 	    from ${table.name}

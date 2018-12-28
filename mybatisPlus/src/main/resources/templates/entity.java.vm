@@ -1,7 +1,15 @@
 package ${package.Entity};
 
+
 #foreach($pkg in ${table.importPackages})
+#if(${pkg}=='com.baomidou.mybatisplus.annotation.TableName')
+#elseif(${pkg}=='com.baomidou.mybatisplus.annotation.IdType')
+#elseif(${pkg}=='com.baomidou.mybatisplus.extension.activerecord.Model')
+#elseif(${pkg}=='com.baomidou.mybatisplus.annotation.TableId')
+#elseif(${pkg}=='com.baomidou.mybatisplus.annotation.TableField')
+#else
 import ${pkg};
+#end
 #end
 
 

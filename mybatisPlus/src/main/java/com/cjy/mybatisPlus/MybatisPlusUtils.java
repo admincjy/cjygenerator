@@ -66,15 +66,16 @@ public class MybatisPlusUtils {
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("123456");
-        dsc.setUrl("jdbc:mysql:///vhr?characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql:///buy_world?characterEncoding=utf8");
         mpg.setDataSource(dsc);
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
-        strategy.setTablePrefix(new String[] { "" });// 此处可以修改为您的表前缀
+        strategy.setTablePrefix(new String[] { "t_base_" });// 此处可以修改为您的表前缀
+        strategy.setFieldPrefix(new String[] { "f_" });// 此处可以修改为您的字段前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[] { "oplog" }); // 需要生成的表
+        strategy.setInclude(new String[] { "t_base_menu","t_base_menu_role","t_base_role","t_base_user","t_base_user_role" }); // 需要生成的表
         // strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 自定义实体父类
         //strategy.setSuperEntityClass("com.spf.model.Entity");
@@ -98,7 +99,7 @@ public class MybatisPlusUtils {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.wecat.small");
+        pc.setParent("com.cjy.shiro");
         pc.setController("controller");
         pc.setEntity("entity");
         pc.setMapper("mapper");

@@ -12,9 +12,9 @@ import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.wecat.small.common.BaseRespData;
-import com.wecat.small.common.BaseRespMsg;
-import com.wecat.small.common.PageInfoReqVo;
+import com.cjy.shiro.common.BaseRespData;
+import com.cjy.shiro.common.BaseRespMsg;
+import com.cjy.shiro.common.PageInfoReqVo;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class ${table.controllerName} {
     /**
      * 获取全部数据
      */
-    @RequestMapping("/all")
+    @RequestMapping("/selectList")
     public BaseRespData findAll(){
         List<${entity}> entitys = targetService.selectList();
         BaseRespData baseRespData=new BaseRespData();
@@ -61,7 +61,7 @@ public class ${table.controllerName} {
     /**
      * 根据ID查找数据
      */
-    @RequestMapping("/find")
+    @RequestMapping("/queryById")
     public BaseRespData find(@RequestParam("id") Long id){
         ${entity} entity = targetService.selectById(id);
         BaseRespData baseRespData=new BaseRespData();
@@ -74,10 +74,22 @@ public class ${table.controllerName} {
     /**
      * 添加数据
      */
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/insert")
     public BaseRespMsg addItem(@RequestBody ${entity} entity){
         int isOk = targetService.insert(entity);
         if(isOk==1){
+            return new BaseRespMsg(0,"添加成功");
+        }
+        return BaseRespMsg.error("添加失败");
+    }
+    
+    /**
+     * 批量添加数据
+     */
+    @RequestMapping(value = "/batchSave")
+    public BaseRespMsg batchSave(List<${entity}> entitys){
+        int isOk = targetService.batchSave(entitys);
+        if(isOk>0){
             return new BaseRespMsg(0,"添加成功");
         }
         return BaseRespMsg.error("添加失败");
@@ -87,7 +99,7 @@ public class ${table.controllerName} {
     /**
      * 更新数据
      */
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/update")
     public BaseRespMsg update(@RequestBody ${entity} entity){
         int isOk = targetService.update(entity);
         if(isOk==1){
@@ -95,6 +107,18 @@ public class ${table.controllerName} {
         }
         return BaseRespMsg.error("更新失败");
      }
+     
+     /**
+     * 批量更新数据
+     */
+    @RequestMapping(value = "/batchUpdate")
+    public BaseRespMsg batchUpdate(List<${entity}> entitys){
+        int isOk = targetService.batchUpdate(entitys);
+        if(isOk>0){
+            return new BaseRespMsg(0,"更新成功");
+        }
+        return BaseRespMsg.error("更新失败");
+    }
 
 
     /**
